@@ -22,9 +22,14 @@ public class CommonController {
 
 
     ///TODO: we can do with the map and get data in the method
-    @PutMapping("{id}/")
+    @PutMapping("company/{id}/")
     ResponseEntity<Company> updateCompany(@PathVariable("id") Long id, @RequestBody Company company) {
         return service.updateCompany(id, company);
+    }
+
+    @GetMapping("company/{id}/")
+    ResponseEntity<Company> getCompany(@PathVariable("id") Long id) {
+        return service.getCompany(id);
     }
 
 
@@ -53,8 +58,17 @@ public class CommonController {
 
     @PutMapping("employee/{e_id}")
     ResponseEntity<Employee> updateEmp(@PathVariable(name = "e_id") Long id, @RequestBody Employee employee) {
-        System.out.println(id);
         return service.updateEmp(id, employee);
+    }
+
+    @GetMapping("employee/{e_id}")
+    ResponseEntity<Employee> getEmp(@PathVariable(name = "e_id") Long id) {
+        return service.getEmp(id);
+    }
+
+    @DeleteMapping("employee/{e_id}")
+    ResponseEntity<Employee> deleteEmp(@PathVariable(name = "e_id") Long id) {
+        return service.deleteEmp(id);
     }
 
 

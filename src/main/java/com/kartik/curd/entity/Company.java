@@ -23,13 +23,13 @@ public class Company extends AuditModel implements Serializable {
 
 
     ///TODO: based on action we can define the cascade type
-    @OneToOne(cascade = CascadeType.PERSIST)
-    //@OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "company_address_id")
     private Address companyAddress;
 
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Employee> employeeList = new ArrayList<>();
 
     ///for bidirectional mapping
@@ -39,19 +39,21 @@ public class Company extends AuditModel implements Serializable {
     }
 
 
-
     ///TODO: for directional mapping add
-    public void addEmp(Employee employee){
+    public void addEmp(Employee employee) {
         employeeList.add(employee);
         employee.setCompany(this);
     }
 
 
     ///TODO: for directional mapping remove
-    public void removeEmp(Employee employee){
+    public void removeEmp(Employee employee) {
         employeeList.remove(employee);
         employee.setCompany(null);
     }
 
-
+    public void setEmployeeList(List<Employee> employeeList) {
+        employeeList.forEach(employee -> employee.setCompany(this));
+        this.employeeList = employeeList;
+    }
 }

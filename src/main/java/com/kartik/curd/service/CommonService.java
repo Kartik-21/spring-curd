@@ -20,4 +20,10 @@ public interface CommonService {
     ResponseEntity<Employee> updateEmp(Long id, Employee employee);
 
     ResponseEntity<Address> addAddress(Address address);
+
+    ResponseEntity<Company> getCompany(Long id);
+
+    ResponseEntity<Employee> getEmp(Long id);
+
+    ResponseEntity<Employee> deleteEmp(Long id);
 }

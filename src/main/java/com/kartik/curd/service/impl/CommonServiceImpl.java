@@ -43,9 +43,12 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public ResponseEntity<Company> updateCompany(Long id, Company company) {
         try {
-            Company company1 = companyRepository.getById(id);
-            company1.setCompanyName(company.getCompanyName());
-            return new ResponseEntity<>(companyRepository.save(company1), HttpStatus.OK);
+            Company newCompany = companyRepository.getById(id);
+            newCompany.setCompanyName(company.getCompanyName());
+            newCompany.setCompanyAddress(company.getCompanyAddress());
+            newCompany.getEmployeeList().clear();
+            newCompany.setEmployeeList(company.getEmployeeList());
+            return new ResponseEntity<>(companyRepository.save(newCompany), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -100,6 +103,43 @@ public class CommonServiceImpl implements CommonService {
         System.out.println(address.toString());
         try {
             return new ResponseEntity<>(addressRepository.save(address), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Company> getCompany(Long id) {
+        try {
+            if (companyRepository.findById(id).isPresent()) {
+                return new ResponseEntity<>(companyRepository.findById(id).get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Employee> getEmp(Long id) {
+        try {
+            if (employeeRepository.findById(id).isPresent()) {
+                return new ResponseEntity<>(employeeRepository.findById(id).get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Employee> deleteEmp(Long id) {
+        try {
+            employeeRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

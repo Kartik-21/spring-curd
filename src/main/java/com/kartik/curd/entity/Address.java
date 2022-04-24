@@ -24,7 +24,7 @@ public class Address extends AuditModel implements Serializable {
     private String state;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "companyAddress", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(mappedBy = "companyAddress", fetch = FetchType.LAZY)
     private Company company;
 
 }
