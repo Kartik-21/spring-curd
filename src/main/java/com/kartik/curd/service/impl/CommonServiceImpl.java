@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 
 @Service
@@ -34,6 +37,9 @@ public class CommonServiceImpl implements CommonService {
             /// TODO: one approach for OneToOne
             //Address address = company.getCompanyAddress();
             //address.setCompany(company);
+            URI build = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}").build(company);
+            System.out.println("CommonServiceImpl.addCompany");
+            System.out.println(build);
             return new ResponseEntity<>(companyRepository.save(company), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

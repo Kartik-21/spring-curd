@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
+
 @RestController
 @RequestMapping("api/v1/common/")
 public class CommonController {
@@ -24,6 +28,27 @@ public class CommonController {
     ///TODO: we can do with the map and get data in the method
     @PutMapping("company/{id}/")
     ResponseEntity<Company> updateCompany(@PathVariable("id") Long id, @RequestBody Company company) {
+
+//        LocalDate localDateTime = LocalDate.of(2520, Month.APRIL, 51);
+//
+//        LocalTime localTime = LocalTime.of(12, 52);
+//        LocalDateTime localDateTime1 = LocalDateTime.of(localDateTime, localTime);
+//        LocalDate localDate = LocalDateTime.now().toLocalDate();
+//        LocalDate localDate1 = localDate.plusDays(1);
+//        localDate1.isAfter(localDate);
+//
+//        LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+//        LocalDate.parse("DD/MM/yyyy");
+//
+//
+//        DayOfWeek dayOfWeek = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()).getDayOfWeek();
+//
+//
+//        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("nm,"));
+//        ZonedDateTime zonedDateTime1 = ZonedDateTime.now(ZoneId.of("nm,"));
+//
+//        int i = zonedDateTime.getHour() - zonedDateTime1.getHour();
+
         return service.updateCompany(id, company);
     }
 

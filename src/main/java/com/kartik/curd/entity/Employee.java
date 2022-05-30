@@ -2,6 +2,7 @@ package com.kartik.curd.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kartik.curd.config.AuditModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

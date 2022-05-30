@@ -1,5 +1,6 @@
 package com.kartik.curd.entity;
 
+import com.kartik.curd.config.AuditModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,36 @@ public class Company extends AuditModel implements Serializable {
 
     private String companyName;
 
+    public Integer getCompanyRank() {
+        return companyRank;
+    }
+
+    public void setCompanyRank(Integer companyRank) {
+        this.companyRank = companyRank;
+    }
+
+    private String firstName;
+
+    private Integer companyRank;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    private String lastName;
+
 
     ///TODO: based on action we can define the cascade type
 //    @OneToOne(cascade = CascadeType.PERSIST)
@@ -31,6 +62,13 @@ public class Company extends AuditModel implements Serializable {
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Employee> employeeList = new ArrayList<>();
+
+    public Company(String companyName,String firstName,String lastName,Integer companyRank) {
+        this.companyName = companyName;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.companyRank=companyRank;
+    }
 
     ///for bidirectional mapping
     public void setCompanyAddress(Address companyAddress) {
