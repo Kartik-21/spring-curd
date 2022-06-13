@@ -31,6 +31,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+			<!--https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html-->
 			<scope>runtime</scope>
 		</dependency>
 
@@ -94,6 +95,8 @@
 			<scope>test</scope>
 		</dependency>
 
+
+		<!--provide endpoints for server performance-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

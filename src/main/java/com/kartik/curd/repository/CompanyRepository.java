@@ -77,5 +77,17 @@ public interface CompanyRepository extends JpaRepository<Company,Long> {
     List<Company> findByCompanyNameIn(List<? extends String> list);
     List<Company> findByCompanyNameNotIn(List<? super String> list);
 
+    //True False (only for boolean variables)
+    //findByActiveTrue();
 
+    //IgnoreCase
+    //findByFirstnameIgnoreCase(String name);
+
+//---------------------------------------------------------------------------
+
+//    @Query("select u from User u where u.emailAddress = ?1")
+//    User findByEmailAddress(String emailAddress);
+
+    //  @Query(value = "SELECT * FROM USERS WHERE EMAIL_ADDRESS = ?1", nativeQuery = true)
+    //  User findByEmailAddress(String emailAddress);
 }

@@ -3,7 +3,7 @@
 @Bean must be --> @Configuration
 
 @Component(value="t") --> use Autowired and Qualifier("t")
-    ---> when same bean use(inheritance) --> use Primary when ambiguity occur
+    ---> when same bean use(inheritance) --> use @Primary when ambiguity occur
 https://www.baeldung.com/spring-qualifier-annotation
 
 
@@ -15,3 +15,30 @@ https://www.baeldung.com/spring-qualifier-annotation
 
 define properties files and then configure
     - then define dynamic configuration based on env
+    - define command line arg to change the properties
+    - define property file in where is java file is located
+
+
+microservices
+    - use eureka server (it provides dynamic server url(like server-name) for api call)
+    - use cloud config (for the same all server -> we can modify based on server name property file in GitHub (we can also use encryption in the credential)
+        - server is change immediately
+        - client is change using actuator endpoint(/refresh) to reload the bean in the server
+
+
+CURD
+    one to one:
+        - need of helper function for bidirectional mapping
+        - child Eager 
+        - automatic manage all things (child add, remove, update) -> based on id
+        - remove child set (orphanRemoval=true)
+
+    one to many:
+        - need of helper function for bidirectional mapping
+        - Child Lazy
+        - automatic manage all things (child add, remove, update) -> based on id
+        - remove child set (orphanRemoval=true)
+
+ 
+
+        
