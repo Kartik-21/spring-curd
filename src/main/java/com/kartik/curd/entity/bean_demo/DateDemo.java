@@ -1,6 +1,7 @@
 package com.kartik.curd.entity.bean_demo;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,26 +41,36 @@ public class DateDemo {
 
 
         LocalDate date = localDateTime.toLocalDate();
-
-        LocalTime time = LocalDateTime.now().toLocalTime();
-
+        System.out.println("localDateTime -> date");
         System.out.println(date);
 
+
+        LocalTime time = LocalDateTime.now().toLocalTime();
+        System.out.println("localDateTime -> time");
         System.out.println(time);
 
+
+        DayOfWeek dayOfWeek = LocalDateTime.now().getDayOfWeek();
+        System.out.println("localDateTime -> dayOfWeek");
+        System.out.println(dayOfWeek);
+
+
+
         ZonedDateTime zonedDateTime = ZonedDateTime.now(Clock.systemDefaultZone());
+        System.out.println(Clock.systemDefaultZone());
+        System.out.println(zonedDateTime.toLocalDateTime());
 
         ZoneId zoneId = Clock.systemUTC().getZone();
         System.out.println(zoneId.toString());
-        System.out.println(zonedDateTime);
 
         ZonedDateTime zonedDateTime1 = ZonedDateTime.now();
 
         ZonedDateTime paris = ZonedDateTime.now(ZoneId.of("Europe/Paris"));
+        System.out.println("Paris " + paris);
         ZonedDateTime london = ZonedDateTime.now(ZoneId.of("Europe/London"));
+        System.out.println("London " + london);
 
         System.out.println(paris.getHour() - london.getHour());
-
 
         System.out.println(LocalDate.now().minusDays(2));
         System.out.println(localDate.isAfter(LocalDate.now().minusDays(-2)));
@@ -97,6 +108,12 @@ public class DateDemo {
         System.out.println(Duration.between(start2, end2).getNano());
 
         System.out.println(Duration.between(start1, end2).getNano());
+
+
+        System.out.println("\n\n\n");
+
+        Stream.of(ZoneId.getAvailableZoneIds()).forEach(System.out::println);
+        DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
     }
 }

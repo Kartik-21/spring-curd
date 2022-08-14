@@ -27,7 +27,7 @@ microservices
 
 
 CURD
-    one to one:
+    one to one: (provide two way adding the data) (always define the properties in child side like. mappedby -> orphanRemoval, cascade)
         - need of helper function for bidirectional mapping
         - child Eager 
         - automatic manage all things (child add, remove, update) -> based on id
@@ -39,6 +39,15 @@ CURD
         - automatic manage all things (child add, remove, update) -> based on id
         - remove child set (orphanRemoval=true)
 
- 
 
-        
+============================================================
+
+    one to one: / one to many: / many to many: (uni-directional)
+        -   easy to maintain relationship  
+        -   no extra code (helper function) 
+        -   no need worry of recursion or data saving isuue
+
+
+==============================================================
+
+    try interitance

@@ -3,14 +3,16 @@ package com.kartik.curd.controller;
 import com.kartik.curd.entity.Address;
 import com.kartik.curd.entity.Company;
 import com.kartik.curd.entity.Employee;
+import com.kartik.curd.entity.book.Book;
+import com.kartik.curd.repository.AddressRepository;
+import com.kartik.curd.repository.BookRepository;
+import com.kartik.curd.repository.EmployeeRepository;
 import com.kartik.curd.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
+import java.time.Instant;
 
 @RestController
 @RequestMapping("api/v1/common/")
@@ -19,9 +21,40 @@ public class CommonController {
     @Autowired
     CommonService service;
 
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @Autowired
+    BookRepository bookRepository;
+
+
+
     @PostMapping("company/")
     ResponseEntity<Company> addCompany(@RequestBody Company company) {
         return service.addCompany(company);
+    }
+
+    @GetMapping
+    public void demo(){
+        Address addres=new Address();
+        addres.setCity("Dahod");
+        addres.setState("guj");
+        addres.setCreatedAt(Instant.now());
+        addres.setUpdatedAt(Instant.now());
+        addressRepository.save(addres);
+
+        Employee employee=new Employee();
+        employee.setName("Kartik");
+        employee.setCreatedAt(Instant.now());
+        employee.setUpdatedAt(Instant.now());
+        employeeRepository.saveAndFlush(employee);
+
+        Book book=new Book();
+        book.setBookName("Demo");
+        bookRepository.save(book);
     }
 
 
