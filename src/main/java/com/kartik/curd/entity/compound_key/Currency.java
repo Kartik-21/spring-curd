@@ -1,6 +1,7 @@
 package com.kartik.curd.entity.compound_key;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

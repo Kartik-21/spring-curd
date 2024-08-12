@@ -1,20 +1,18 @@
 package com.kartik.curd.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kartik.curd.config.AuditModel;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "address")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Address extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +22,12 @@ public class Address extends AuditModel implements Serializable {
 
     private String state;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "companyAddress", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
+    @JsonBackReference
     private Company company;
 
+    public Address(String city, String state) {
+        this.city = city;
+        this.state = state;
+    }
 }

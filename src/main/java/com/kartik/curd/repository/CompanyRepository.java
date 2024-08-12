@@ -2,8 +2,6 @@ package com.kartik.curd.repository;
 
 import com.kartik.curd.entity.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -49,8 +47,9 @@ public interface CompanyRepository extends JpaRepository<Company,Long> {
 
     //IsNotNull, NotNull
     //IsNull, Null
-    List<Company> findByCompanyAddressIsNull();
-    List<Company> findByCompanyAddressIsNotNull();
+    List<Company> findByAddressIsNull();
+
+    List<Company> findByAddressIsNotNull();
 
 
 
@@ -64,7 +63,7 @@ public interface CompanyRepository extends JpaRepository<Company,Long> {
     //StartingWith('a%')
     //EndingWith('%b')
     //Containing('%b%')
-    //SELECT * FROM curd.company where company_name not like 'AXZ';
+    //SELECT * FROM curd.company where company_name like '%AXZ%';
     List<Company> findByCompanyNameStartingWith(String name);
     List<Company> findByCompanyNameEndingWith(String name);
     List<Company> findByCompanyNameContaining(String name);

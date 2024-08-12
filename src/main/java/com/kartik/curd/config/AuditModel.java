@@ -1,30 +1,32 @@
 package com.kartik.curd.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.Instant;
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 @Data
 public abstract class AuditModel implements Serializable {
 
-
-    @CreatedDate
     @JsonIgnore
-    @Column(updatable = false)
     private Instant createdAt;
 
-    @LastModifiedDate
     @JsonIgnore
     private Instant updatedAt;
+
+    @PrePersist
+    protected void prePersist() {
+        createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    protected void preUpdate() {
+        updatedAt = Instant.now();
+    }
 
 }

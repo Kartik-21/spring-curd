@@ -1,12 +1,9 @@
 package com.kartik.curd.entity.bank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Author: Kartik Jain

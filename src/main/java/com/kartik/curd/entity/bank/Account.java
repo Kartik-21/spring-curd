@@ -1,10 +1,9 @@
 package com.kartik.curd.entity.bank;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

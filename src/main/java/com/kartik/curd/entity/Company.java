@@ -1,11 +1,11 @@
 package com.kartik.curd.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kartik.curd.config.AuditModel;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,6 @@ import java.util.List;
 @Table(name = "company")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Company extends AuditModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,76 +21,61 @@ public class Company extends AuditModel implements Serializable {
 
     private String companyName;
 
-    public Integer getCompanyRank() {
-        return companyRank;
-    }
-
-    public void setCompanyRank(Integer companyRank) {
-        this.companyRank = companyRank;
-    }
-
     private String firstName;
 
     private Integer companyRank;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     private String lastName;
 
 
     ///TODO: based on action we can define the cascade type
 //    @OneToOne(cascade = CascadeType.PERSIST)
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "company_address_id")
-    private Address companyAddress;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
+    @JoinColumn(name = "address_id")
+    private Address address;
 
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Employee> employeeList = new ArrayList<>();
-
-    public Company(String companyName,String firstName,String lastName,Integer companyRank) {
-        this.companyName = companyName;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.companyRank=companyRank;
-    }
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Employee> employees;
 
     ///for bidirectional mapping
-    public void setCompanyAddress(Address companyAddress) {
-        companyAddress.setCompany(this);
-        this.companyAddress = companyAddress;
+    public void setAddress(Address address) {
+        address.setCompany(this);
+        this.address = address;
     }
 
 
     ///TODO: for directional mapping add
     public void addEmp(Employee employee) {
-        employeeList.add(employee);
+        if (employees == null)
+            employees = new ArrayList<>();
+
         employee.setCompany(this);
+        employees.add(employee);
     }
 
 
     ///TODO: for directional mapping remove
     public void removeEmp(Employee employee) {
-        employeeList.remove(employee);
         employee.setCompany(null);
+        employees.remove(employee);
     }
 
-    public void setEmployeeList(List<Employee> employeeList) {
-        employeeList.forEach(employee -> employee.setCompany(this));
-        this.employeeList = employeeList;
+    public void setEmployees(List<Employee> employees) {
+        employees.forEach(employee -> employee.setCompany(this));
+        this.employees = employees;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", companyRank=" + companyRank +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

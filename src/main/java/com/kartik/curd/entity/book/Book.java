@@ -1,6 +1,9 @@
 package com.kartik.curd.entity.book;
 
-import javax.persistence.*;
+import com.kartik.curd.config.AuditModel;
+import jakarta.persistence.*;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,13 +19,16 @@ import java.util.Set;
 
 
 @Entity
-public class Book implements Serializable {
+@Data
+public class Book extends AuditModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String bookName;
+
+    private Long page;
 
     public Book() {
     }
@@ -49,32 +55,6 @@ public class Book implements Serializable {
         this.authorList.remove(author);
         author.getBookList().remove(this);
     }
-
-
-    public Book(String bookName) {
-        this.bookName = bookName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
-
-    public Set<Author> getAuthorList() {
-        return authorList;
-    }
-
 
 //    @Override
 //    public boolean equals(Object o) {

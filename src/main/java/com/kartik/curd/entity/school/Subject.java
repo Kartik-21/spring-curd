@@ -1,9 +1,8 @@
 package com.kartik.curd.entity.school;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.ToString;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity

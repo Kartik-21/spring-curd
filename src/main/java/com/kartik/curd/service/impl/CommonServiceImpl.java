@@ -51,9 +51,9 @@ public class CommonServiceImpl implements CommonService {
         try {
             Company newCompany = companyRepository.getById(id);
             newCompany.setCompanyName(company.getCompanyName());
-            newCompany.setCompanyAddress(company.getCompanyAddress());
-            newCompany.getEmployeeList().clear();
-            newCompany.setEmployeeList(company.getEmployeeList());
+            newCompany.setAddress(company.getAddress());
+            newCompany.getEmployees().clear();
+            newCompany.setEmployees(company.getEmployees());
             return new ResponseEntity<>(companyRepository.save(newCompany), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

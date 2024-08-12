@@ -1,11 +1,9 @@
 package com.kartik.curd.entity.school;
 
-import lombok.ToString;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 

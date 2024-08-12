@@ -1,13 +1,13 @@
 package com.kartik.curd.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kartik.curd.config.AuditModel;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -24,7 +24,10 @@ public class Employee extends AuditModel implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
-    @JsonIgnore
+    @JsonBackReference
     private Company company;
 
+    public Employee(String name) {
+        this.name = name;
+    }
 }

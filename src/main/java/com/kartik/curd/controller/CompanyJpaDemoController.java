@@ -3,11 +3,8 @@ package com.kartik.curd.controller;
 
 import com.kartik.curd.entity.Company;
 import com.kartik.curd.entity.ResponseModel;
-import com.kartik.curd.entity.ResponseModel1;
-import com.kartik.curd.entity.bean_demo.A;
 import com.kartik.curd.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,19 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 
-@RequestMapping("/demo")
+@RequestMapping("/company")
 @RestController
 public class CompanyJpaDemoController {
 
 
     @Autowired
     private CompanyRepository companyRepository;
-
-
-    @Autowired
-    @Qualifier("B")
-    private A a;
-
 
 //    @GetMapping
 //    ResponseEntity<List<Company>> getDistinctCompany(){
@@ -38,11 +29,6 @@ public class CompanyJpaDemoController {
     @GetMapping("/all")
     ResponseModel<List<Company>> getAll() {
         return new ResponseModel<List<Company>>(companyRepository.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/all1")
-    ResponseModel1<List<Company>> getAllData() {
-        return new ResponseModel1<List<Company>>(companyRepository.findAll(), HttpStatus.OK,"Kartik");
     }
 
     @PostMapping
@@ -66,6 +52,11 @@ public class CompanyJpaDemoController {
     @GetMapping("/demo")
     ResponseModel<List<Company>> getDemo() {
         return new ResponseModel<List<Company>>(companyRepository.findByCompanyNameIn(List.of("Mab","Axz")), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<Company> getCompany(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(companyRepository.findById(id).get(), HttpStatus.OK);
     }
 
 }
