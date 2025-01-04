@@ -1,56 +1,46 @@
 package com.kartik.service;
 
-import com.kartik.entity.Address;
-import com.kartik.entity.Company;
-import com.kartik.entity.Employee;
-import com.kartik.repository.AddressRepository;
-import com.kartik.repository.CompanyRepository;
-import com.kartik.repository.EmployeeRepository;
+import com.kartik.entity.*;
+import com.kartik.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-public class CompanyManagementServiceImpl implements CompanyManagementService {
+public class CompanyServiceImpl implements CompanyService {
+
+    private final CompanyRepository companyRepository;
+    private final AddressRepository addressRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ARepository aRepository;
+    private final BRepository bRepository;
+    private final CRepository cRepository;
 
     @Autowired
-    CompanyRepository companyRepository;
-
-    @Autowired
-    AddressRepository addressRepository;
-
-    @Autowired
-    EmployeeRepository employeeRepository;
-
+    public CompanyServiceImpl(CompanyRepository companyRepository, AddressRepository addressRepository, EmployeeRepository employeeRepository, ARepository aRepository, BRepository bRepository, CRepository cRepository) {
+        this.companyRepository = companyRepository;
+        this.addressRepository = addressRepository;
+        this.employeeRepository = employeeRepository;
+        this.aRepository = aRepository;
+        this.bRepository = bRepository;
+        this.cRepository = cRepository;
+    }
 
     @Override
-    public ResponseEntity<Company> addCompany(Company company) {
-
-        try {
-
-            /// TODO: one approach for OneToOne
-            //Address address = company.getCompanyAddress();
-            //address.setCompany(company);
-            URI build = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}").build(company);
-            System.out.println("CommonServiceImpl.addCompany");
-            System.out.println(build);
-            return new ResponseEntity<>(companyRepository.save(company), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Company> createCompany(Company company) {
+        return new ResponseEntity<>(companyRepository.save(company), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Company> updateCompany(Long id, Company company) {
         try {
             Company newCompany = companyRepository.getById(id);
-            newCompany.setCompanyName(company.getCompanyName());
-            newCompany.setAddress(company.getAddress());
+//            newCompany.setCompanyName(company.getCompanyName());
+//            newCompany.setAddress(company.getAddress());
             newCompany.getEmployees().clear();
             newCompany.setEmployees(company.getEmployees());
             return new ResponseEntity<>(companyRepository.save(newCompany), HttpStatus.OK);
@@ -102,28 +92,50 @@ public class CompanyManagementServiceImpl implements CompanyManagementService {
         }
     }
 
+//    @Override
+//    public ResponseEntity<Address> addAddress(Address address) {
+//        System.out.println("CommonServiceImpl.addAddress");
+//        System.out.println(address.toString());
+//        try {
+//            return new ResponseEntity<>(addressRepository.save(address), HttpStatus.CREATED);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
     @Override
+    @Transactional
     public ResponseEntity<Address> addAddress(Address address) {
-        System.out.println("CommonServiceImpl.addAddress");
-        System.out.println(address.toString());
-        try {
-            return new ResponseEntity<>(addressRepository.save(address), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        System.out.println("CompanyServiceImpl.addAddress");
+
+        addA();
+
+        return ResponseEntity.ok(new Address());
+    }
+
+    private void addA() {
+        A a = new A();
+        a.setName("a");
+        aRepository.save(a);
+        addB();
+    }
+
+    private void addB() {
+        B a = new B();
+        a.setName("a");
+        bRepository.save(a);
+        addC();
+
+    }
+
+    private void addC() {
+        throw new RuntimeException();
     }
 
     @Override
-    public ResponseEntity<Company> getCompany(Long id) {
-        try {
-            if (companyRepository.findById(id).isPresent()) {
-                return new ResponseEntity<>(companyRepository.findById(id).get(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @Cacheable(value = "company", key = "#id")
+    public Company companyDetails(Long id) {
+        return companyRepository.findById(id).orElse(null);
     }
 
     @Override

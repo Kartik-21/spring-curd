@@ -1,33 +1,26 @@
 package com.kartik.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kartik.config.AuditModel;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class Employee extends AuditModel implements Serializable {
+@Entity
+public class Employee extends AuditModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "company_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Company company;
 
-    public Employee(String name) {
-        this.name = name;
-    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
 }

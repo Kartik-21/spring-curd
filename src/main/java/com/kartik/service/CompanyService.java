@@ -5,9 +5,9 @@ import com.kartik.entity.Company;
 import com.kartik.entity.Employee;
 import org.springframework.http.ResponseEntity;
 
-public interface CompanyManagementService {
+public interface CompanyService {
 
-    ResponseEntity<Company> addCompany(Company company);
+    ResponseEntity<Company> createCompany(Company company);
 
     ResponseEntity<Company> updateCompany(Long id, Company company);
 
@@ -21,7 +21,7 @@ public interface CompanyManagementService {
 
     ResponseEntity<Address> addAddress(Address address);
 
-    ResponseEntity<Company> getCompany(Long id);
+    Company companyDetails(Long id);
 
     ResponseEntity<Employee> getEmp(Long id);
 
