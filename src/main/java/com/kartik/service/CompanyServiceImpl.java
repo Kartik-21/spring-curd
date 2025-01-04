@@ -1,7 +1,11 @@
 package com.kartik.service;
 
-import com.kartik.entity.*;
-import com.kartik.repository.*;
+import com.kartik.entity.Address;
+import com.kartik.entity.Company;
+import com.kartik.entity.Employee;
+import com.kartik.repository.AddressRepository;
+import com.kartik.repository.CompanyRepository;
+import com.kartik.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -16,18 +20,12 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final AddressRepository addressRepository;
     private final EmployeeRepository employeeRepository;
-    private final ARepository aRepository;
-    private final BRepository bRepository;
-    private final CRepository cRepository;
 
     @Autowired
-    public CompanyServiceImpl(CompanyRepository companyRepository, AddressRepository addressRepository, EmployeeRepository employeeRepository, ARepository aRepository, BRepository bRepository, CRepository cRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, AddressRepository addressRepository, EmployeeRepository employeeRepository) {
         this.companyRepository = companyRepository;
         this.addressRepository = addressRepository;
         this.employeeRepository = employeeRepository;
-        this.aRepository = aRepository;
-        this.bRepository = bRepository;
-        this.cRepository = cRepository;
     }
 
     @Override
@@ -106,26 +104,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional
     public ResponseEntity<Address> addAddress(Address address) {
-        System.out.println("CompanyServiceImpl.addAddress");
-
-        addA();
-
         return ResponseEntity.ok(new Address());
-    }
-
-    private void addA() {
-        A a = new A();
-        a.setName("a");
-        aRepository.save(a);
-        addB();
-    }
-
-    private void addB() {
-        B a = new B();
-        a.setName("a");
-        bRepository.save(a);
-        addC();
-
     }
 
     private void addC() {

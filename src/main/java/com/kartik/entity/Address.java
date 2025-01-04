@@ -1,13 +1,16 @@
 package com.kartik.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.kartik.config.AuditModel;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Address implements Serializable/*extends AuditModel */ {
+public class Address extends AuditModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,6 +20,6 @@ public class Address implements Serializable/*extends AuditModel */ {
     private String state;
 
     @OneToOne(mappedBy = "address")
-//    @JsonBackReference
+    @JsonBackReference
     private Employee company;
 }

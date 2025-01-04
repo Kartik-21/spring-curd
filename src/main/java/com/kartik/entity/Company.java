@@ -1,25 +1,28 @@
 package com.kartik.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kartik.config.AuditModel;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 public class Company extends AuditModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-//    /// TODO: based on action we can define the cascade type
-    /// /    @OneToOne(cascade = CascadeType.PERSIST)
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-//    @JsonManagedReference
-//    @JoinColumn(name = "address_id")
-//    private Address address;
+    // TODO: based on action we can define the cascade type
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
