@@ -21,5 +21,5 @@ public class Address extends AuditModel {
 
     @OneToOne(mappedBy = "address")
     @JsonBackReference
-    private Employee company;
+    private Company company;
 }

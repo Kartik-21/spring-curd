@@ -18,16 +18,15 @@ public class Company extends AuditModel {
     private Long id;
     private String name;
 
-    // TODO: based on action we can define the cascade type
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "address_id")
     private Address address;
 
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
 //    @JsonManagedReference
-    private List<Employee> employees;
+//    private List<Employee> employees;
 
     /// for bidirectional mapping
 //    public void setAddress(Address address) {

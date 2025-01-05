@@ -14,13 +14,13 @@ public class Employee extends AuditModel {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-//    @JsonBackReference
-    private Company company;
+//    @ManyToOne
+//    @JoinColumn(name = "company_id")
+////    @JsonBackReference
+//    private Company company;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private Address address;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id")
+//    private Address address;
 }

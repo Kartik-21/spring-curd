@@ -36,12 +36,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public ResponseEntity<Company> updateCompany(Long id, Company company) {
         try {
-            Company newCompany = companyRepository.getById(id);
-//            newCompany.setCompanyName(company.getCompanyName());
-//            newCompany.setAddress(company.getAddress());
-            newCompany.getEmployees().clear();
-            newCompany.setEmployees(company.getEmployees());
-            return new ResponseEntity<>(companyRepository.save(newCompany), HttpStatus.OK);
+            return new ResponseEntity<>(companyRepository.save(company), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -112,7 +107,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    @Cacheable(value = "company", key = "#id")
+//    @Cacheable(value = "company", key = "#id")
     public Company companyDetails(Long id) {
         return companyRepository.findById(id).orElse(null);
     }
