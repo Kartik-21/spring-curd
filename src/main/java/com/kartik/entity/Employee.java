@@ -1,12 +1,15 @@
 package com.kartik.entity;
 
-import com.kartik.config.AuditModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.kartik.config.Auditable;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
-public class Employee extends AuditModel {
+public class Employee extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,13 +17,17 @@ public class Employee extends AuditModel {
 
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "company_id")
-////    @JsonBackReference
-//    private Company company;
+    //owing side --child
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    @JsonBackReference
+//    @JsonIgnore
+    private Company company;
 
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_id")
-//    private Address address;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "employee_x_address",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private List<Address> addresses;
 }

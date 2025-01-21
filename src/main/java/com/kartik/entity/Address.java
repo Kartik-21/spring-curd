@@ -1,15 +1,18 @@
 package com.kartik.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.kartik.config.AuditModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kartik.config.Auditable;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Address extends AuditModel {
+public class Address extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +25,8 @@ public class Address extends AuditModel {
     @OneToOne(mappedBy = "address")
     @JsonBackReference
     private Company company;
+
+    @ManyToMany(mappedBy = "addresses")
+    @JsonIgnore
+    private List<Employee> employees;
 }

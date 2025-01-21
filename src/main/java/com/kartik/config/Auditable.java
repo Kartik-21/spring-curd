@@ -11,7 +11,7 @@ import java.time.Instant;
 
 @MappedSuperclass
 @Data
-public abstract class AuditModel implements Serializable {
+public abstract class Auditable implements Serializable {
 
     @JsonIgnore
     private Instant createdAt;

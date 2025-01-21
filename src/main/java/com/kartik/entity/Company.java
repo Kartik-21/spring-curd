@@ -1,7 +1,7 @@
 package com.kartik.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.kartik.config.AuditModel;
+import com.kartik.config.Auditable;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Company extends AuditModel {
+public class Company extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +23,10 @@ public class Company extends AuditModel {
     @JoinColumn(name = "address_id")
     private Address address;
 
-
-//    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonManagedReference
-//    private List<Employee> employees;
+    //inverse side -- Parent
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Employee> employees;
 
     /// for bidirectional mapping
 //    public void setAddress(Address address) {
@@ -51,8 +51,9 @@ public class Company extends AuditModel {
 //        employees.remove(employee);
 //    }
 
-//    public void setEmployees(List<Employee> employees) {
-//        employees.forEach(employee -> employee.setCompany(this));
-//        this.employees = employees;
-//    }
+    //this is for bidirectional mapping
+    public void setEmployees(List<Employee> employees) {
+        employees.forEach(employee -> employee.setCompany(this));
+        this.employees = employees;
+    }
 }
