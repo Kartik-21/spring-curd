@@ -11,6 +11,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -97,7 +99,7 @@ public class CompanyServiceImpl implements CompanyService {
 //    }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.MANDATORY,isolation = Isolation.DEFAULT)
     public ResponseEntity<Address> addAddress(Address address) {
         return ResponseEntity.ok(new Address());
     }

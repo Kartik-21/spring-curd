@@ -32,3 +32,6 @@ CURD
         -   no extra code (helper function) 
         -   no need worry of recursion or data saving isuue
 
+
+
+keytool -genkeypair   -alias spring-curd -keyalg RSA   -keysize 2048 -storetype jks   -keystore keystore.jks   -validity 2

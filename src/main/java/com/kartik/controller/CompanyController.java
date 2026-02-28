@@ -20,6 +20,11 @@ public class CompanyController {
     }
 
 
+    @GetMapping("/company")
+    ResponseEntity<?> getCompanies() {
+        return ResponseEntity.ok("companies will come here");
+    }
+
     @GetMapping("/company/{id}")
     ResponseEntity<Company> getCompany(@PathVariable("id") Long id) {
         return ResponseEntity.ok(companyService.companyDetails(id));
